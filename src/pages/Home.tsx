@@ -1,16 +1,24 @@
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  TextField,
+  MenuItem,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { languages } from "../utils/Languages";
 
 const Home = () => {
   const navigate = useNavigate();
   const [name, setName] = useState<string>("");
-  const [lang, setLang] = useState<string>("");
+  const [lang, setLang] = useState<string>("JS");
 
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) =>
     setName(e.currentTarget.value);
   const handleLang = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setLang(e.currentTarget.value);
+    setLang(e.target.value);
 
   const handleSubmit = () => {
     if (name !== "" && lang !== "") {
@@ -64,13 +72,18 @@ const Home = () => {
                 value={name}
               />,
               <TextField
+                id="outlined-select-currency"
+                select
                 label="Language"
-                variant="outlined"
-                fullWidth
-                required
-                onChange={handleLang}
                 value={lang}
-              />,
+                onChange={handleLang}
+              >
+                {languages.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>,
               <TextField label="Age" variant="outlined" fullWidth />,
               <TextField label="Gender" variant="outlined" fullWidth />,
             ].map((x, i) => (

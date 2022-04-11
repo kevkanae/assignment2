@@ -1,4 +1,4 @@
-export const questions = [
+export const jsQuestions = [
   {
     questionText: "What is the capital of France?",
     answerOptions: [
