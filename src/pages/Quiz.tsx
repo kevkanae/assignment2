@@ -2,10 +2,12 @@ import { Box, Button, Grid } from "@mui/material";
 import GridOptions from "../components/GridOptions";
 import Question from "../components/Question";
 import { jsQuestions } from "../utils/Questions";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { stat } from "../utils/Status";
+import { useNavigate } from "react-router-dom";
 
 const Quiz = () => {
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentAnswerIndex, setCurrentAnswerIndex] = useState<number>(-1);
   // const [currentStatus, setCurrentStatus] = useState<any[]>(stat);
@@ -89,7 +91,6 @@ const Quiz = () => {
                 : currentIndex === i
                 ? "#b8d2fc"
                 : "#eee",
-              // backgroundColor: x.status ? "lightgreen" : "#e5e5e5",
               mx: 3,
             }}
             onClick={() => setCurrentIndex(i)}
@@ -182,9 +183,13 @@ const Quiz = () => {
         <Button
           sx={{ alignSelf: "center" }}
           onClick={() => {
-            let fa = JSON.parse(localStorage.getItem("ANS") || "");
-            console.log(fa);
-            localStorage.clear();
+            let ans = JSON.parse(localStorage.getItem("ANS") as any);
+            let trues = ans.filter(
+              (x: { a: { answerText: any }[]; ca: { answerText: any }[] }) =>
+                x.a[0].answerText === x.ca[0].answerText
+            );
+            localStorage.setItem("trues", trues.length);
+            navigate("/score");
           }}
         >
           Final Submit

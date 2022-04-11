@@ -6,7 +6,7 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { languages } from "../utils/Languages";
 
@@ -27,6 +27,12 @@ const Home = () => {
       navigate("/quiz");
     }
   };
+
+  useEffect(() => {
+    if (Object.keys(localStorage).length !== 0) {
+      localStorage.clear();
+    }
+  }, []);
 
   return (
     <>
