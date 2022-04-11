@@ -1,19 +1,19 @@
-import {
-  Box,
-  Button,
-  Grid,
-  TextField,
-  MenuItem,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import GridOptions from "../components/GridOptions";
 import Question from "../components/Question";
 import { jsQuestions } from "../utils/Questions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { stat } from "../utils/Status";
 
 const Quiz = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [currentAnswerIndex, setCurrentAnswerIndex] = useState<number>();
+  const [currentAnswerIndex, setCurrentAnswerIndex] = useState<number>(-1);
+  // const [currentStatus, setCurrentStatus] = useState<any[]>(stat);
+  const [currentStatus, setCurrentStatus] = useState<any[]>(
+    localStorage.getItem("Status") === null
+      ? stat
+      : JSON.parse(localStorage.getItem("Status") as any)
+  );
 
   const handleQChange = (curr: number, type: number) => {
     if (type === +1 && currentIndex !== 4) {
@@ -23,13 +23,25 @@ const Quiz = () => {
       console.log(curr - 1);
       setCurrentIndex(curr - 1);
     }
+    setCurrentAnswerIndex(-1);
   };
 
   const handleClickedAnswer = (index: number) => {
     setCurrentAnswerIndex(index);
   };
 
+  const updateCircle = (curr: number) => {
+    const update = currentStatus;
+    let index = currentStatus.findIndex((x) => x.qi === curr);
+
+    update[index].status = true;
+    setCurrentStatus(update);
+    localStorage.setItem("Status", JSON.stringify(update));
+  };
+
   const handleSaveAnswer = (curr: number) => {
+    if (currentAnswerIndex === -1) alert("Select an Answer");
+    updateCircle(curr);
     let currAns = {
       qi: curr,
       q: jsQuestions[curr].questionText,
@@ -59,6 +71,7 @@ const Quiz = () => {
       localStorage.setItem("ANS", JSON.stringify(thisOnlyRunsOnce));
     }
   };
+  console.log(currentStatus);
 
   return (
     <>
@@ -71,9 +84,16 @@ const Quiz = () => {
           justifyContent: "center",
         }}
       >
-        {[1, 2, 3, 4, 5].map((x, i) => (
-          <Button key={i} sx={{ mx: 3 }} onClick={() => setCurrentIndex(i)}>
-            {x}
+        {currentStatus.map((x, i) => (
+          <Button
+            key={i}
+            sx={{
+              backgroundColor: x.status ? "lightgreen" : "#e5e5e5",
+              mx: 3,
+            }}
+            onClick={() => setCurrentIndex(i)}
+          >
+            {x.qi}
           </Button>
         ))}
       </Box>
