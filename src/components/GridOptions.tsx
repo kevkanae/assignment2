@@ -1,12 +1,27 @@
-import { Grid, Typography } from "@mui/material";
-import React from "react";
+import { Grid, Typography, Box } from "@mui/material";
 
-const GridOptions = () => {
+interface IOptions {
+  options: string | number | boolean;
+  ansIndex: number;
+  clickedAns: Function;
+}
+
+const GridOptions = (props: IOptions) => {
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={8}>
-        <Typography>s</Typography>
-      </Grid>
+    <Grid item xs={6} onClick={() => props.clickedAns(props.ansIndex)}>
+      <Box
+        sx={{
+          backgroundColor: "#777",
+          p: 2,
+          boxShadow: 7,
+          "&:hover": { cursor: "pointer" },
+          "&:active": {
+            backgroundColor: "#e5e5e5",
+          },
+        }}
+      >
+        <Typography sx={{ textAlign: "center" }}>{props.options}</Typography>
+      </Box>
     </Grid>
   );
 };
