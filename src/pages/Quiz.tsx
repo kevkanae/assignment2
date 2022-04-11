@@ -17,10 +17,8 @@ const Quiz = () => {
 
   const handleQChange = (curr: number, type: number) => {
     if (type === +1 && currentIndex !== 4) {
-      console.log(curr + 1);
       setCurrentIndex(curr + 1);
     } else if (type === -1 && currentIndex !== 0) {
-      console.log(curr - 1);
       setCurrentIndex(curr - 1);
     }
     setCurrentAnswerIndex(-1);
@@ -54,7 +52,6 @@ const Quiz = () => {
     // If Answer Key exists in local storage
     if (localStorage.getItem("ANS") !== null) {
       let prevAns = JSON.parse(localStorage.getItem("ANS") || "");
-      console.log(prevAns);
       //if current Q exists then modify
       let ind = prevAns.findIndex((x: { qi: number }) => x.qi === curr);
 
@@ -71,7 +68,6 @@ const Quiz = () => {
       localStorage.setItem("ANS", JSON.stringify(thisOnlyRunsOnce));
     }
   };
-  console.log(currentStatus);
 
   return (
     <>
@@ -88,7 +84,12 @@ const Quiz = () => {
           <Button
             key={i}
             sx={{
-              backgroundColor: x.status ? "lightgreen" : "#e5e5e5",
+              backgroundColor: x.status
+                ? "lightgreen"
+                : currentIndex === i
+                ? "#b8d2fc"
+                : "#eee",
+              // backgroundColor: x.status ? "lightgreen" : "#e5e5e5",
               mx: 3,
             }}
             onClick={() => setCurrentIndex(i)}
@@ -107,7 +108,12 @@ const Quiz = () => {
           backgroundColor: "#E5E5E5",
         }}
       >
-        <Button onClick={() => handleQChange(currentIndex, -1)}>◀️</Button>
+        <Button
+          variant="outlined"
+          onClick={() => handleQChange(currentIndex, -1)}
+        >
+          ◀️
+        </Button>
         <Box
           sx={{
             backgroundColor: "white",
@@ -115,6 +121,7 @@ const Quiz = () => {
             height: "63vh",
             my: 3,
             p: 3,
+            borderRadius: 3,
           }}
         >
           <>
@@ -137,10 +144,31 @@ const Quiz = () => {
                 />
               ))}
             </Grid>
-            <Button onClick={() => handleSaveAnswer(currentIndex)}>Save</Button>
+            <Box
+              sx={{
+                height: "10vh",
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                mt: "2rem",
+              }}
+            >
+              <Button
+                size="large"
+                onClick={() => handleSaveAnswer(currentIndex)}
+              >
+                Save
+              </Button>
+            </Box>
           </>
         </Box>
-        <Button onClick={() => handleQChange(currentIndex, +1)}>▶️</Button>
+        <Button
+          variant="outlined"
+          onClick={() => handleQChange(currentIndex, +1)}
+        >
+          ▶️
+        </Button>
       </Box>
       <Box
         sx={{
@@ -152,7 +180,7 @@ const Quiz = () => {
         }}
       >
         <Button
-          sx={{}}
+          sx={{ alignSelf: "center" }}
           onClick={() => {
             let fa = JSON.parse(localStorage.getItem("ANS") || "");
             console.log(fa);

@@ -6,8 +6,8 @@ interface IQuestion {
 
 const Question = (props: IQuestion) => {
   return (
-    <Box sx={{ height: "20%", width: "100%" }}>
-      <Typography>{props.q}</Typography>
+    <Box sx={{ height: "20%", width: "100%", mb: "2rem" }}>
+      <Typography sx={{ fontSize: "1.4rem" }}>{props.q}</Typography>
     </Box>
   );
 };

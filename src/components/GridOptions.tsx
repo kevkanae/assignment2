@@ -1,4 +1,5 @@
-import { Grid, Typography, Box } from "@mui/material";
+import { Grid, Typography, Box, Button } from "@mui/material";
+import { useState } from "react";
 
 interface IOptions {
   options: string | number | boolean;
@@ -7,16 +8,25 @@ interface IOptions {
 }
 
 const GridOptions = (props: IOptions) => {
+  // const [active, setActive] = useState(false);
   return (
-    <Grid item xs={6} onClick={() => props.clickedAns(props.ansIndex)}>
+    <Grid
+      item
+      xs={5}
+      onClick={() => {
+        // setActive(!active);
+        props.clickedAns(props.ansIndex);
+      }}
+    >
       <Box
         sx={{
-          backgroundColor: "#777",
+          backgroundColor: "#ddd",
           p: 2,
-          boxShadow: 7,
-          "&:hover": { cursor: "pointer" },
+          boxShadow: 3,
+          borderRadius: 3,
+          "&:hover": { cursor: "pointer", backgroundColor: "#aaa" },
           "&:active": {
-            backgroundColor: "#e5e5e5",
+            backgroundColor: "white",
           },
         }}
       >
