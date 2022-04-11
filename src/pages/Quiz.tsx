@@ -9,7 +9,20 @@ import {
 import GridOptions from "../components/GridOptions";
 import Question from "../components/Question";
 import { jsQuestions } from "../utils/Questions";
+import { useState } from "react";
+
 const Quiz = () => {
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+  const handleQChange = (curr: number, type: number) => {
+    if (type === +1 && currentIndex !== 4) {
+      console.log(curr + 1);
+      setCurrentIndex(curr + 1);
+    } else if (type === -1 && currentIndex !== 0) {
+      console.log(curr - 1);
+      setCurrentIndex(curr - 1);
+    }
+  };
   return (
     <>
       <Box
@@ -22,7 +35,7 @@ const Quiz = () => {
         }}
       >
         {[1, 2, 3, 4, 5].map((x, i) => (
-          <Button key={i} sx={{ mx: 3 }}>
+          <Button key={i} sx={{ mx: 3 }} onClick={() => setCurrentIndex(i)}>
             {x}
           </Button>
         ))}
@@ -37,7 +50,7 @@ const Quiz = () => {
           backgroundColor: "#E5E5E5",
         }}
       >
-        <Button>◀️</Button>
+        <Button onClick={() => handleQChange(currentIndex, -1)}>◀️</Button>
         <Box
           sx={{
             backgroundColor: "white",
@@ -46,8 +59,14 @@ const Quiz = () => {
             my: 3,
             p: 3,
           }}
-        ></Box>
-        <Button>▶️</Button>
+        >
+          {/* {jsQuestions.map((x, i) => ( */}
+          <Box>
+            <Question q={jsQuestions[currentIndex].questionText} />
+          </Box>
+          {/* ))} */}
+        </Box>
+        <Button onClick={() => handleQChange(currentIndex, +1)}>▶️</Button>
       </Box>
     </>
   );
