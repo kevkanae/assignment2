@@ -2,19 +2,15 @@ import { Box, Button, Grid } from "@mui/material";
 import GridOptions from "../components/GridOptions";
 import Question from "../components/Question";
 import { jsQuestions } from "../constants/Questions";
-import { useState } from "react";
+import React, { useState } from "react";
 import { stat } from "../constants/Status";
-import { handleSaveAnswer } from "../utils/SaveHandler";
 import FinalSubmitButton from "../components/FinalSubmitButton";
 
 const Quiz = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentAnswerIndex, setCurrentAnswerIndex] = useState<number>(-1);
-  const [currentStatus, setCurrentStatus] = useState<any[]>(
-    localStorage.getItem("Status") === null
-      ? stat
-      : JSON.parse(localStorage.getItem("Status") as any)
-  );
+  const [answers, setAnswer] = useState<any>([{}]);
+  const [currentStatus, setCurrentStatus] = useState<any[]>(stat);
 
   const handleQChange = (curr: number, type: number) => {
     if (type === +1 && currentIndex !== 4) {
@@ -28,6 +24,16 @@ const Quiz = () => {
   const handleClickedAnswer = (index: number) => {
     setCurrentAnswerIndex(index);
   };
+  const handleFillBlanks = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let index = jsQuestions[2].answerOptions.findIndex(
+      (x) => x.answerText === e.currentTarget.value
+    );
+    if (index === -1) {
+      setCurrentAnswerIndex(1);
+    } else {
+      setCurrentAnswerIndex(index);
+    }
+  };
 
   const updateCircle = (curr: number) => {
     const update = currentStatus;
@@ -35,7 +41,35 @@ const Quiz = () => {
 
     update[index].status = true;
     setCurrentStatus(update);
-    localStorage.setItem("Status", JSON.stringify(update));
+  };
+
+  const handleSaveAnswer = (curr: number, ansIndex: number) => {
+    if (ansIndex === -1) alert("Select an Answer");
+
+    let currAns = {
+      qi: curr,
+      q: jsQuestions[curr].questionText,
+      a: jsQuestions[curr].answerOptions.filter((x) => x.isCorrect),
+      ca: jsQuestions[curr].answerOptions.filter((_, i) => i === ansIndex),
+    };
+
+    if (answers !== [{}]) {
+      let prevAns = answers;
+      let ind = prevAns.findIndex((x: { qi: number }) => x.qi === curr);
+      console.log(prevAns);
+
+      // if current Q doesnt exist
+      if (ind === -1) {
+        prevAns.push(currAns);
+        setAnswer(prevAns);
+      } else {
+        prevAns[ind] = currAns;
+        setAnswer(prevAns);
+      }
+    } else {
+      let thisOnlyRunsOnce = [currAns];
+      setAnswer(thisOnlyRunsOnce);
+    }
   };
 
   return (
@@ -95,24 +129,32 @@ const Quiz = () => {
         >
           <>
             <Question q={jsQuestions[currentIndex].questionText} />
-            <Grid
-              container
-              spacing={2}
-              rowSpacing={4}
-              columnSpacing={3}
-              direction="row"
-              justifyContent="space-evenly"
-              alignItems="center"
-            >
-              {jsQuestions[currentIndex].answerOptions.map((x, i: number) => (
-                <GridOptions
-                  key={i}
-                  options={x.answerText}
-                  ansIndex={i}
-                  clickedAns={(ansI: number) => handleClickedAnswer(ansI)}
-                />
-              ))}
-            </Grid>
+            {currentIndex <= 1 && (
+              <Grid
+                container
+                spacing={2}
+                rowSpacing={4}
+                columnSpacing={3}
+                direction="row"
+                justifyContent="space-evenly"
+                alignItems="center"
+              >
+                {jsQuestions[currentIndex].answerOptions.map((x, i: number) => (
+                  <GridOptions
+                    key={i}
+                    options={x.answerText}
+                    ansIndex={i}
+                    clickedAns={(ansI: number) => handleClickedAnswer(ansI)}
+                  />
+                ))}
+              </Grid>
+            )}
+            {currentIndex === 2 && (
+              <Box>
+                <input type="text" onChange={handleFillBlanks} /> declarations
+                are immuatable (var/let/const)
+              </Box>
+            )}
             <Box
               sx={{
                 height: "10vh",
