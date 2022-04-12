@@ -1,16 +1,15 @@
 import { Box, Button, Grid } from "@mui/material";
 import GridOptions from "../components/GridOptions";
 import Question from "../components/Question";
-import { jsQuestions } from "../utils/Questions";
+import { jsQuestions } from "../constants/Questions";
 import { useState } from "react";
-import { stat } from "../utils/Status";
-import { useNavigate } from "react-router-dom";
+import { stat } from "../constants/Status";
+import { handleSaveAnswer } from "../utils/SaveHandler";
+import FinalSubmitButton from "../components/FinalSubmitButton";
 
 const Quiz = () => {
-  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentAnswerIndex, setCurrentAnswerIndex] = useState<number>(-1);
-  // const [currentStatus, setCurrentStatus] = useState<any[]>(stat);
   const [currentStatus, setCurrentStatus] = useState<any[]>(
     localStorage.getItem("Status") === null
       ? stat
@@ -37,38 +36,6 @@ const Quiz = () => {
     update[index].status = true;
     setCurrentStatus(update);
     localStorage.setItem("Status", JSON.stringify(update));
-  };
-
-  const handleSaveAnswer = (curr: number) => {
-    if (currentAnswerIndex === -1) alert("Select an Answer");
-    updateCircle(curr);
-    let currAns = {
-      qi: curr,
-      q: jsQuestions[curr].questionText,
-      a: jsQuestions[curr].answerOptions.filter((x) => x.isCorrect),
-      ca: jsQuestions[curr].answerOptions.filter(
-        (_, i) => i === currentAnswerIndex
-      ),
-    };
-
-    // If Answer Key exists in local storage
-    if (localStorage.getItem("ANS") !== null) {
-      let prevAns = JSON.parse(localStorage.getItem("ANS") || "");
-      //if current Q exists then modify
-      let ind = prevAns.findIndex((x: { qi: number }) => x.qi === curr);
-
-      // if current Q doesnt exist
-      if (ind === -1) {
-        prevAns.push(currAns);
-        localStorage.setItem("ANS", JSON.stringify(prevAns));
-      } else {
-        prevAns[ind] = currAns;
-        localStorage.setItem("ANS", JSON.stringify(prevAns));
-      }
-    } else {
-      let thisOnlyRunsOnce = [currAns];
-      localStorage.setItem("ANS", JSON.stringify(thisOnlyRunsOnce));
-    }
   };
 
   return (
@@ -112,6 +79,7 @@ const Quiz = () => {
         <Button
           variant="outlined"
           onClick={() => handleQChange(currentIndex, -1)}
+          disabled={currentIndex === 0 ? true : false}
         >
           ◀️
         </Button>
@@ -157,7 +125,10 @@ const Quiz = () => {
             >
               <Button
                 size="large"
-                onClick={() => handleSaveAnswer(currentIndex)}
+                onClick={() => {
+                  handleSaveAnswer(currentIndex, currentAnswerIndex);
+                  updateCircle(currentIndex);
+                }}
               >
                 Save
               </Button>
@@ -167,34 +138,12 @@ const Quiz = () => {
         <Button
           variant="outlined"
           onClick={() => handleQChange(currentIndex, +1)}
+          disabled={currentIndex === 4 ? true : false}
         >
           ▶️
         </Button>
       </Box>
-      <Box
-        sx={{
-          height: "10vh",
-          width: "100vw",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Button
-          sx={{ alignSelf: "center" }}
-          onClick={() => {
-            let ans = JSON.parse(localStorage.getItem("ANS") as any);
-            let trues = ans.filter(
-              (x: { a: { answerText: any }[]; ca: { answerText: any }[] }) =>
-                x.a[0].answerText === x.ca[0].answerText
-            );
-            localStorage.setItem("trues", trues.length);
-            navigate("/score");
-          }}
-        >
-          Final Submit
-        </Button>
-      </Box>
+      <FinalSubmitButton />
     </>
   );
 };

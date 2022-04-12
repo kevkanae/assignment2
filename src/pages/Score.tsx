@@ -7,9 +7,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 const truthy = localStorage.getItem("trues") as unknown as number;
 
 const Score = () => {
-  const [answers, setAnswers] = useState<any[]>(
-    JSON.parse(localStorage.getItem("ANS") as any)
-  );
+  const answers = JSON.parse(localStorage.getItem("ANS") as any);
 
   return (
     <Box
@@ -29,7 +27,7 @@ const Score = () => {
           p: 1,
         }}
       >
-        {answers.map((x, i) => (
+        {answers.map((x: any, i: number) => (
           <Box
             key={i}
             sx={{

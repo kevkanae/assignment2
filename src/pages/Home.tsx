@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { languages } from "../utils/Languages";
+import { languages } from "../constants/Languages";
 
 const Home = () => {
   const navigate = useNavigate();
