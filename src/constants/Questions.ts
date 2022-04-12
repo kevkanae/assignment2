@@ -33,12 +33,29 @@ export const jsQuestions = [
     ],
   },
   {
-    questionText: "What is the capital of France?",
+    questionText: `Match the following JavaScript function with their description:    
+
+      i) onblur a) script runs when element changes
+      ii) onmouseup b) script runs when the form is reset
+      iii) onchange c) script runs when the element lost focus.
+      iv) onreset d) script runs when mouse button is released.`,
     answerOptions: [
-      { answerText: "New York", isCorrect: false },
-      { answerText: "London", isCorrect: false },
-      { answerText: "Paris", isCorrect: true },
-      { answerText: "Dublin", isCorrect: false },
+      {
+        answerText: "i-d, ii-c, iii-a, iv-b",
+        isCorrect: false,
+      },
+      {
+        answerText: "i-b, ii-c, iii-a, iv-d",
+        isCorrect: false,
+      },
+      {
+        answerText: "i-c, ii-d, iii-a, iv-b",
+        isCorrect: true,
+      },
+      {
+        answerText: "i-a, ii-c, iii-d, iv-b",
+        isCorrect: false,
+      },
     ],
   },
 ];

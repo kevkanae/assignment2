@@ -5,12 +5,23 @@ import { jsQuestions } from "../constants/Questions";
 import React, { useState } from "react";
 import { stat } from "../constants/Status";
 import FinalSubmitButton from "../components/FinalSubmitButton";
+import Checkbox from "@mui/material/Checkbox";
 
 const Quiz = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentAnswerIndex, setCurrentAnswerIndex] = useState<number>(-1);
   const [answers, setAnswer] = useState<any>([{}]);
   const [currentStatus, setCurrentStatus] = useState<any[]>(stat);
+  const [checked, setChecked] = React.useState([true, false, false, false]);
+
+  const handleCheckboxChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    i: number
+  ) => {
+    let val = checked;
+    val[i] = event.target.checked;
+    setChecked([...val]);
+  };
 
   const handleQChange = (curr: number, type: number) => {
     if (type === +1 && currentIndex !== 4) {
@@ -24,6 +35,7 @@ const Quiz = () => {
   const handleClickedAnswer = (index: number) => {
     setCurrentAnswerIndex(index);
   };
+
   const handleFillBlanks = (e: React.ChangeEvent<HTMLInputElement>) => {
     let index = jsQuestions[2].answerOptions.findIndex(
       (x) => x.answerText === e.currentTarget.value
@@ -44,31 +56,43 @@ const Quiz = () => {
   };
 
   const handleSaveAnswer = (curr: number, ansIndex: number) => {
-    if (ansIndex === -1) alert("Select an Answer");
-
-    let currAns = {
-      qi: curr,
-      q: jsQuestions[curr].questionText,
-      a: jsQuestions[curr].answerOptions.filter((x) => x.isCorrect),
-      ca: jsQuestions[curr].answerOptions.filter((_, i) => i === ansIndex),
-    };
-
-    if (answers !== [{}]) {
-      let prevAns = answers;
-      let ind = prevAns.findIndex((x: { qi: number }) => x.qi === curr);
-      console.log(prevAns);
-
-      // if current Q doesnt exist
-      if (ind === -1) {
-        prevAns.push(currAns);
-        setAnswer(prevAns);
-      } else {
-        prevAns[ind] = currAns;
-        setAnswer(prevAns);
+    if (ansIndex === -1 && curr !== 3) alert("Select an Answer");
+    else {
+      var checkedAnswers: any[] = [];
+      if (curr === 3) {
+        const indexes = checked.flatMap((x, i) => (x === true ? i : []));
+        checkedAnswers = jsQuestions[curr].answerOptions.filter((x, i) => {
+          if (i === indexes[i]) return x;
+        });
       }
-    } else {
-      let thisOnlyRunsOnce = [currAns];
-      setAnswer(thisOnlyRunsOnce);
+
+      let currAns = {
+        qi: curr,
+        q: jsQuestions[curr].questionText,
+        a: jsQuestions[curr].answerOptions.filter((x) => x.isCorrect),
+        ca:
+          curr !== 3
+            ? jsQuestions[curr].answerOptions.filter((_, i) => i === ansIndex)
+            : checkedAnswers,
+      };
+
+      if (answers !== [{}]) {
+        let prevAns = answers;
+        let ind = prevAns.findIndex((x: { qi: number }) => x.qi === curr);
+        console.log(prevAns);
+
+        // if current Q doesnt exist
+        if (ind === -1) {
+          prevAns.push(currAns);
+          setAnswer(prevAns);
+        } else {
+          prevAns[ind] = currAns;
+          setAnswer(prevAns);
+        }
+      } else {
+        let thisOnlyRunsOnce = [currAns];
+        setAnswer(thisOnlyRunsOnce);
+      }
     }
   };
 
@@ -96,7 +120,7 @@ const Quiz = () => {
             }}
             onClick={() => setCurrentIndex(i)}
           >
-            {x.qi}
+            {x.qi + 1}
           </Button>
         ))}
       </Box>
@@ -129,7 +153,7 @@ const Quiz = () => {
         >
           <>
             <Question q={jsQuestions[currentIndex].questionText} />
-            {currentIndex <= 1 && (
+            {(currentIndex <= 1 || currentIndex === 4) && (
               <Grid
                 container
                 spacing={2}
@@ -155,6 +179,21 @@ const Quiz = () => {
                 are immuatable (var/let/const)
               </Box>
             )}
+            {currentIndex === 3 && (
+              <Box>
+                {jsQuestions[currentIndex].answerOptions.map((x, i: number) => (
+                  <Box key={i}>
+                    {x.answerText}
+                    <Checkbox
+                      checked={checked[i]}
+                      onChange={(e) => handleCheckboxChange(e, i)}
+                      inputProps={{ "aria-label": "controlled" }}
+                    />
+                  </Box>
+                ))}
+              </Box>
+            )}
+
             <Box
               sx={{
                 height: "10vh",
@@ -185,7 +224,7 @@ const Quiz = () => {
           ▶️
         </Button>
       </Box>
-      <FinalSubmitButton />
+      <FinalSubmitButton data={answers} />
     </>
   );
 };

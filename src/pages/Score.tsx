@@ -4,11 +4,10 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
-const truthy = localStorage.getItem("trues") as unknown as number;
 
 const Score = () => {
-  const answers = JSON.parse(localStorage.getItem("ANS") as any);
-
+  const truthy = localStorage.getItem("trues") as unknown as number;
+  const answers = JSON.parse(localStorage.getItem("ans") as any);
   return (
     <Box
       sx={{
