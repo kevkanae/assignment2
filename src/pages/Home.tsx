@@ -74,6 +74,7 @@ const Home = () => {
                 variant="outlined"
                 fullWidth
                 required
+                role="Name-inp"
                 onChange={handleName}
                 value={name}
               />,
@@ -81,6 +82,7 @@ const Home = () => {
                 id="outlined-select-currency"
                 select
                 label="Language"
+                aria-label="Language"
                 value={lang}
                 onChange={handleLang}
               >
@@ -98,7 +100,9 @@ const Home = () => {
               </Grid>
             ))}
           </Grid>
-          <Button onClick={handleSubmit}>Submit</Button>
+          <Button role="sub-button" onClick={handleSubmit}>
+            Submit
+          </Button>
         </Box>
       </Box>
     </>

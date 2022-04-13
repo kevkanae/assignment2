@@ -61,6 +61,7 @@ const Score = () => {
         }}
       >
         <Pie
+          role="score-piechart"
           data={{
             labels: ["Correct", "Wrong"],
             datasets: [

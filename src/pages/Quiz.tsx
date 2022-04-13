@@ -135,6 +135,7 @@ const Quiz = () => {
         }}
       >
         <Button
+          role="prev-q"
           variant="outlined"
           onClick={() => handleQChange(currentIndex, -1)}
           disabled={currentIndex === 0 ? true : false}
@@ -217,6 +218,7 @@ const Quiz = () => {
           </>
         </Box>
         <Button
+        role="next-q"
           variant="outlined"
           onClick={() => handleQChange(currentIndex, +1)}
           disabled={currentIndex === 4 ? true : false}
