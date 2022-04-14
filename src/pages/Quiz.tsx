@@ -13,6 +13,12 @@ const Quiz = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentAnswerIndex, setCurrentAnswerIndex] = useState<number>(-1);
   const [answers, setAnswer] = useState<any>([{}]);
+  const [matchData, setMatchData] = useState({
+    1: "",
+    2: "",
+    3: "",
+    4: "",
+  });
   const [currentStatus, setCurrentStatus] = useState<any[]>(stat);
   const [checked, setChecked] = React.useState([true, false, false, false]);
 
@@ -58,7 +64,7 @@ const Quiz = () => {
   };
 
   const handleSaveAnswer = (curr: number, ansIndex: number) => {
-    if (ansIndex === -1 && curr !== 3) alert("Select an Answer");
+    if (ansIndex === -1 && curr < 3) alert("Select an Answer");
     else {
       var checkedAnswers: any[] = [];
       if (curr === 3) {
@@ -142,14 +148,17 @@ const Quiz = () => {
         <Box
           sx={{
             backgroundColor: "white",
-            width: "49vw",
+            width: "56vw",
             my: 3,
-            p: 3,
+            p: 2,
             borderRadius: 2,
           }}
         >
           <>
-            <Question q={jsQuestions[currentIndex].questionText} />
+            <Question
+              q={jsQuestions[currentIndex].questionText}
+              index={currentIndex}
+            />
             {(currentIndex <= 1 || currentIndex === 4) && (
               <Grid
                 container
@@ -166,6 +175,9 @@ const Quiz = () => {
                     options={x.answerText}
                     ansIndex={i}
                     clickedAns={(ansI: number) => handleClickedAnswer(ansI)}
+                    currIndex={currentIndex}
+                    mapIndex={i}
+                    setMatchData={setMatchData}
                   />
                 ))}
               </Grid>
@@ -227,7 +239,7 @@ const Quiz = () => {
           ▶️
         </Button>
       </Box>
-      <FinalSubmitButton data={answers} />
+      <FinalSubmitButton data={answers} matchData={matchData} />
     </>
   );
 };

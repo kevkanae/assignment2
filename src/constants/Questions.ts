@@ -33,12 +33,8 @@ export const jsQuestions = [
     ],
   },
   {
-    questionText: `Match the following JavaScript function with their description:    
-
-      i) onblur a) script runs when element changes
-      ii) onmouseup b) script runs when the form is reset
-      iii) onchange c) script runs when the element lost focus.
-      iv) onreset d) script runs when mouse button is released.`,
+    questionText:
+      "Match the following JavaScript function with their description: 1. onblur | a) script runs when element changes | 2. onmouseup | b) script runs when the form is reset | 3. onchange | c) script runs when the element lost focus. | 4. onreset | d) script runs when mouse button is released.",
     answerOptions: [
       {
         answerText: "i-d, ii-c, iii-a, iv-b",
@@ -59,3 +55,10 @@ export const jsQuestions = [
     ],
   },
 ];
+
+export const matchq = {
+  1: "c",
+  2: "d",
+  3: "a",
+  4: "b",
+};

@@ -8,6 +8,8 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 const Score = () => {
   const truthy = localStorage.getItem("trues") as unknown as number;
   const answers = JSON.parse(localStorage.getItem("ans") as any);
+  console.log(answers);
+
   return (
     <Box
       sx={{
@@ -33,9 +35,7 @@ const Score = () => {
               width: "42vw",
               my: 3,
               backgroundColor:
-                x.a[0].answerText === x.ca[0].answerText
-                  ? "#d6ffde"
-                  : "#ffd6d6",
+                x.a[0].isCorrect === x.ca[0].isCorrect ? "#d6ffde" : "#ffd6d6",
               borderRadius: 1,
               border: "solid 1px #777",
               p: 1,
@@ -44,8 +44,16 @@ const Score = () => {
             <Typography sx={{ fontSize: "1.4rem", fontWeight: 600 }}>
               {x.q}
             </Typography>
-            <Typography>Correct Answer: {x.a[0].answerText}</Typography>
-            <Typography>Your Answer: {x.ca[0].answerText}</Typography>
+            <Typography>
+              Correct Answer:{" "}
+              {i === 4 ? JSON.stringify(x.a[0].answerText) : x.a[0].answerText}
+            </Typography>
+            <Typography>
+              Your Answer:{" "}
+              {i === 4
+                ? JSON.stringify(x.ca[0].answerText)
+                : x.ca[0].answerText}
+            </Typography>
           </Box>
         ))}
       </Box>

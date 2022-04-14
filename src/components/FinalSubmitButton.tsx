@@ -1,7 +1,8 @@
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { matchq } from "../constants/Questions";
 
-const FinalSubmitButton = (props: { data: any[] }) => {
+const FinalSubmitButton = (props: { data: any[]; matchData: any }) => {
   const navigate = useNavigate();
 
   return (
@@ -19,7 +20,6 @@ const FinalSubmitButton = (props: { data: any[] }) => {
         onClick={() => {
           let ans = props.data.filter((x) => Object.keys(x).length !== 0);
 
-          console.log(ans);
           var trues = 0;
           for (let i = 0; i < ans.length; i++) {
             if (ans[i].a[0] === ans[i].ca[0]) {
@@ -27,7 +27,32 @@ const FinalSubmitButton = (props: { data: any[] }) => {
             }
           }
 
+          if (
+            Object.entries(props.matchData).sort().toString() ===
+            Object.entries(matchq).sort().toString()
+          )
+            trues++;
+
           let len = `${trues}`;
+          ans[4] = {
+            qi: 4,
+            q: "Match the Following",
+            a: [
+              {
+                answerText: matchq,
+                isCorrect: true,
+              },
+            ],
+            ca: [
+              {
+                answerText: props.matchData,
+                isCorrect:
+                  Object.entries(props.matchData).sort().toString() ===
+                  Object.entries(matchq).sort().toString(),
+              },
+            ],
+          };
+          console.log(ans);
 
           localStorage.setItem("trues", len);
           localStorage.setItem("ans", JSON.stringify(ans));
