@@ -6,6 +6,8 @@ import React, { useState } from "react";
 import { stat } from "../constants/Status";
 import FinalSubmitButton from "../components/FinalSubmitButton";
 import Checkbox from "@mui/material/Checkbox";
+import NumberNav from "../components/NumberNav";
+import { row } from "../constants/FlexStyles";
 
 const Quiz = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -100,34 +102,26 @@ const Quiz = () => {
     <>
       <Box
         sx={{
+          ...row,
           height: "10vh",
           width: "100vw",
-          display: "flex",
-          alignItems: "center",
           justifyContent: "center",
         }}
       >
         {currentStatus.map((x, i) => (
-          <Button
+          <NumberNav
             key={i}
-            sx={{
-              backgroundColor: x.status
-                ? "lightgreen"
-                : currentIndex === i
-                ? "#b8d2fc"
-                : "#eee",
-              mx: 3,
-            }}
-            onClick={() => setCurrentIndex(i)}
-          >
-            {x.qi + 1}
-          </Button>
+            qNumber={x.qi + 1}
+            setCurrentIndex={setCurrentIndex}
+            status={x.status}
+            currIndex={currentIndex}
+            mapIndex={i}
+          />
         ))}
       </Box>
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
+          ...row,
           justifyContent: "space-evenly",
           width: "100vw",
           height: "80vh",
@@ -136,7 +130,7 @@ const Quiz = () => {
       >
         <Button
           role="prev-q"
-          variant="outlined"
+          variant="text"
           onClick={() => handleQChange(currentIndex, -1)}
           disabled={currentIndex === 0 ? true : false}
         >
@@ -146,10 +140,9 @@ const Quiz = () => {
           sx={{
             backgroundColor: "white",
             width: "49vw",
-            height: "63vh",
             my: 3,
             p: 3,
-            borderRadius: 3,
+            borderRadius: 2,
           }}
         >
           <>
@@ -197,16 +190,16 @@ const Quiz = () => {
 
             <Box
               sx={{
+                ...row,
                 height: "10vh",
                 width: "100%",
-                display: "flex",
-                alignItems: "center",
                 justifyContent: "center",
                 mt: "2rem",
               }}
             >
               <Button
                 size="large"
+                sx={{ color: "green", border: "1px solid green" }}
                 onClick={() => {
                   handleSaveAnswer(currentIndex, currentAnswerIndex);
                   updateCircle(currentIndex);
@@ -218,8 +211,8 @@ const Quiz = () => {
           </>
         </Box>
         <Button
-        role="next-q"
-          variant="outlined"
+          role="next-q"
+          variant="text"
           onClick={() => handleQChange(currentIndex, +1)}
           disabled={currentIndex === 4 ? true : false}
         >

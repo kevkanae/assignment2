@@ -13,7 +13,7 @@ import { languages } from "../constants/Languages";
 const Home = () => {
   const navigate = useNavigate();
   const [name, setName] = useState<string>("");
-  const [lang, setLang] = useState<string>("JS");
+  const [lang, setLang] = useState<string>("ENG");
 
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) =>
     setName(e.currentTarget.value);
@@ -82,6 +82,8 @@ const Home = () => {
                 id="outlined-select-currency"
                 select
                 label="Language"
+                fullWidth
+                required
                 aria-label="Language"
                 value={lang}
                 onChange={handleLang}

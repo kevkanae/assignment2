@@ -1,4 +1,4 @@
-import { Grid, Typography, Box } from "@mui/material";
+import { Grid, Typography, Box, Button } from "@mui/material";
 // import { useState } from "react";
 
 interface IOptions {
@@ -18,20 +18,22 @@ const GridOptions = (props: IOptions) => {
         props.clickedAns(props.ansIndex);
       }}
     >
-      <Box
+      <Button
+        variant="outlined"
         sx={{
-          backgroundColor: "#ddd",
-          p: 2,
-          boxShadow: 3,
-          borderRadius: 3,
-          "&:hover": { cursor: "pointer", backgroundColor: "#aaa" },
+          width: "100%",
+          p: 1,
+          borderRadius: 1,
           "&:active": {
-            backgroundColor: "white",
+            backgroundColor: "lightskyblue",
+          },
+          "&:focus": {
+            backgroundColor: "powderblue",
           },
         }}
       >
         <Typography sx={{ textAlign: "center" }}>{props.options}</Typography>
-      </Box>
+      </Button>
     </Grid>
   );
 };
