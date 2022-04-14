@@ -30,7 +30,6 @@ const Score = () => {
           <Box
             key={i}
             sx={{
-              height: "35vh",
               width: "42vw",
               my: 3,
               backgroundColor:

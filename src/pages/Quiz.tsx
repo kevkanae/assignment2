@@ -7,7 +7,7 @@ import { stat } from "../constants/Status";
 import FinalSubmitButton from "../components/FinalSubmitButton";
 import Checkbox from "@mui/material/Checkbox";
 import NumberNav from "../components/NumberNav";
-import { row } from "../constants/FlexStyles";
+import { col, row } from "../constants/FlexStyles";
 
 const Quiz = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -95,6 +95,9 @@ const Quiz = () => {
         let thisOnlyRunsOnce = [currAns];
         setAnswer(thisOnlyRunsOnce);
       }
+      if (currentIndex !== 4) {
+        setCurrentIndex(currentIndex + 1);
+      }
     }
   };
 
@@ -174,7 +177,12 @@ const Quiz = () => {
               </Box>
             )}
             {currentIndex === 3 && (
-              <Box>
+              <Box
+                sx={{
+                  ...col,
+                  justifyContent: "center",
+                }}
+              >
                 {jsQuestions[currentIndex].answerOptions.map((x, i: number) => (
                   <Box key={i}>
                     {x.answerText}

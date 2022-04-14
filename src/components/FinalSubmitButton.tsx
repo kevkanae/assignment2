@@ -17,17 +17,12 @@ const FinalSubmitButton = (props: { data: any[] }) => {
       <Button
         sx={{ alignSelf: "center" }}
         onClick={() => {
-          let ans = props.data;
-          if (ans[0] === {}) ans.splice(0, 1);
+          let ans = props.data.filter((x) => Object.keys(x).length !== 0);
 
           console.log(ans);
           var trues = 0;
           for (let i = 0; i < ans.length; i++) {
-            if (
-              ans[i].a[0] !== undefined &&
-              ans[i].ca[0] !== undefined &&
-              ans[i].a[0] === ans[i].ca[0]
-            ) {
+            if (ans[i].a[0] === ans[i].ca[0]) {
               trues++;
             }
           }
