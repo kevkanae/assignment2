@@ -66,9 +66,9 @@ const Quiz = () => {
   const handleSaveAnswer = (curr: number, ansIndex: number) => {
     if (ansIndex === -1 && curr < 3) alert("Select an Answer");
     else {
-      var checkedAnswers: any[] = [];
-      if (curr === 3) {
-        const indexes = checked.flatMap((x, i) => (x === true ? i : []));
+        var checkedAnswers: any[] = [];
+        if (curr === 3) {
+        const indexes = checked.flatMap((x, i) => (x ? i : []));
         checkedAnswers = jsQuestions[curr].answerOptions.filter((x, i) => {
           if (i === indexes[i]) return x;
         });
@@ -141,7 +141,7 @@ const Quiz = () => {
           role="prev-q"
           variant="text"
           onClick={() => handleQChange(currentIndex, -1)}
-          disabled={currentIndex === 0 ? true : false}
+          disabled={currentIndex === 0}
         >
           ◀️
         </Button>
@@ -185,7 +185,7 @@ const Quiz = () => {
             {currentIndex === 2 && (
               <Box>
                 <input type="text" onChange={handleFillBlanks} /> declarations
-                are immuatable (var/let/const)
+                are immutable (var/let/const)
               </Box>
             )}
             {currentIndex === 3 && (
@@ -219,6 +219,7 @@ const Quiz = () => {
             >
               <Button
                 size="large"
+                role={"save-button"}
                 sx={{ color: "green", border: "1px solid green" }}
                 onClick={() => {
                   handleSaveAnswer(currentIndex, currentAnswerIndex);
@@ -234,7 +235,7 @@ const Quiz = () => {
           role="next-q"
           variant="text"
           onClick={() => handleQChange(currentIndex, +1)}
-          disabled={currentIndex === 4 ? true : false}
+          disabled={currentIndex === 4}
         >
           ▶️
         </Button>

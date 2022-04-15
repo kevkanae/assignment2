@@ -8,7 +8,6 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 const Score = () => {
   const truthy = localStorage.getItem("trues") as unknown as number;
   const answers = JSON.parse(localStorage.getItem("ans") as any);
-  console.log(answers);
 
   return (
     <Box
@@ -41,15 +40,15 @@ const Score = () => {
               p: 1,
             }}
           >
-            <Typography sx={{ fontSize: "1.4rem", fontWeight: 600 }}>
+            <Typography role={"Display-Question"} sx={{ fontSize: "1.4rem", fontWeight: 600 }}>
               {x.q}
             </Typography>
-            <Typography>
+            <Typography role={"Display-Correct-Answer"}>
               Correct Answer:{" "}
               {i === 4 ? JSON.stringify(x.a[0].answerText) : x.a[0].answerText}
             </Typography>
-            <Typography>
-              Your Answer:{" "}
+              <Typography role={"Display-Chosen-Answer"}>
+              Your Answer:
               {i === 4
                 ? JSON.stringify(x.ca[0].answerText)
                 : x.ca[0].answerText}

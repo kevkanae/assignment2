@@ -33,14 +33,14 @@ const Question = (props: IQuestion) => {
           <Box sx={{ width: "100%", mb: "2rem", ...row }}>
             <Box sx={{ ...col, width: "40%" }}>
               {fixQuestion(props.q)[0].map((x, i) => (
-                <Typography key={i} sx={{ fontSize: "0.8rem" }}>
+                <Typography role={"match-qa"} key={i} sx={{ fontSize: "0.8rem" }}>
                   {x}
                 </Typography>
               ))}
             </Box>
             <Box sx={{ ...col, width: "50%" }}>
               {fixQuestion(props.q)[1].map((x, i) => (
-                <Typography key={i} sx={{ fontSize: "0.8rem" }}>
+                <Typography role={"match-qb"} key={i} sx={{ fontSize: "0.8rem" }}>
                   {x}
                 </Typography>
               ))}
@@ -49,7 +49,7 @@ const Question = (props: IQuestion) => {
         </>
       ) : (
         <Box sx={{ width: "100%", mb: "2rem" }}>
-          <Typography sx={{ fontSize: "1rem" }}>{props.q}</Typography>
+          <Typography role={"normal-q"} sx={{ fontSize: "1rem" }}>{props.q}</Typography>
         </Box>
       )}
     </>

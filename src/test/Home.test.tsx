@@ -47,4 +47,20 @@ describe("In Home,", () => {
         const submitButton = screen.getByRole(/sub-button/i);
         expect(submitButton).toBeInTheDocument();
     });
+
+    test("is the age input present", () => {
+        render(<BrowserRouter>
+            <Home/>
+        </BrowserRouter>);
+        const age = screen.getByLabelText(/Enter Age/i);
+        expect(age).toBeInTheDocument();
+    });
+
+    test("is the gender input present", () => {
+        render(<BrowserRouter>
+            <Home/>
+        </BrowserRouter>);
+        const gender = screen.getByLabelText(/Enter Gender/i);
+        expect(gender).toBeInTheDocument();
+    });
 });

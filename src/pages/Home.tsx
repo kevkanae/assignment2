@@ -94,8 +94,8 @@ const Home = () => {
                   </MenuItem>
                 ))}
               </TextField>,
-              <TextField label="Age" variant="outlined" fullWidth />,
-              <TextField label="Gender" variant="outlined" fullWidth />,
+              <TextField label="Enter Age" variant="outlined" fullWidth />,
+              <TextField label="Enter Gender" variant="outlined" fullWidth />,
             ].map((x, i) => (
               <Grid key={i} item xs={6}>
                 <Box sx={{ p: 1 }}>{x}</Box>
