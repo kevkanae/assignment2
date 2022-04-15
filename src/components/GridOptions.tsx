@@ -37,8 +37,9 @@ const GridOptions = (props: IOptions) => {
   return (
     <>
       {props.currIndex === 4 ? (
-        <Grid item xs={5}>
+        <Grid item xs={5} role="gridOpt4">
           <TextField
+            role="matchinp"
             id="outlined-start-adornment"
             sx={{ m: 1, width: "25ch" }}
             name={`${props.mapIndex + 1}`}
@@ -54,6 +55,7 @@ const GridOptions = (props: IOptions) => {
         </Grid>
       ) : (
         <Grid
+          role="gridOpt"
           item
           xs={5}
           onClick={() => {
@@ -61,6 +63,7 @@ const GridOptions = (props: IOptions) => {
           }}
         >
           <Button
+            role="optBtn"
             variant="outlined"
             sx={{
               width: "100%",
@@ -74,7 +77,7 @@ const GridOptions = (props: IOptions) => {
               },
             }}
           >
-            <Typography sx={{ textAlign: "center" }}>
+            <Typography sx={{ textAlign: "center" }} role="optopt">
               {props.options}
             </Typography>
           </Button>

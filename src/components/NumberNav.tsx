@@ -9,6 +9,7 @@ const NumberNav = (props: {
 }) => {
   return (
     <Button
+      role="number-nav"
       sx={{
         backgroundColor: props.status
           ? "lightgreen"

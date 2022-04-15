@@ -7,6 +7,7 @@ const FinalSubmitButton = (props: { data: any[]; matchData: any }) => {
 
   return (
     <Box
+      role="fsubHolder"
       sx={{
         height: "10vh",
         width: "100vw",
@@ -16,6 +17,7 @@ const FinalSubmitButton = (props: { data: any[]; matchData: any }) => {
       }}
     >
       <Button
+        role="fsub"
         sx={{ alignSelf: "center" }}
         onClick={() => {
           let ans = props.data.filter((x) => Object.keys(x).length !== 0);
