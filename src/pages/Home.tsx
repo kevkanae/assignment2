@@ -9,22 +9,33 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { languages } from "../constants/Languages";
+import * as React from "react";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
 
-const Home = () => {
+interface IHome {
+  setName: React.Dispatch<React.SetStateAction<string>>;
+  setLang: React.Dispatch<React.SetStateAction<string>>;
+  name: string;
+  lang: string;
+}
+
+const Home = (props: IHome) => {
   const navigate = useNavigate();
-  const [name, setName] = useState<string>("");
-  const [lang, setLang] = useState<string>("ENG");
 
   const handleName = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setName(e.currentTarget.value);
+    props.setName(e.currentTarget.value);
   const handleLang = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setLang(e.target.value);
+    props.setLang(e.target.value);
 
   const handleSubmit = () => {
-    if (name !== "" && lang !== "") {
-      console.log({ name, lang });
-      localStorage.setItem("User", JSON.stringify({ name, lang }));
+    if (props.name !== "" && props.lang !== "") {
       navigate("/quiz");
+    } else {
+      alert("Fill name and Preferred language");
     }
   };
 
@@ -76,7 +87,7 @@ const Home = () => {
                 required
                 role="Name-inp"
                 onChange={handleName}
-                value={name}
+                value={props.name}
               />,
               <TextField
                 id="outlined-select-currency"
@@ -85,7 +96,7 @@ const Home = () => {
                 fullWidth
                 required
                 aria-label="Language"
-                value={lang}
+                value={props.lang}
                 onChange={handleLang}
               >
                 {languages.map((option) => (
@@ -94,8 +105,33 @@ const Home = () => {
                   </MenuItem>
                 ))}
               </TextField>,
-              <TextField label="Enter Age" variant="outlined" fullWidth />,
-              <TextField label="Enter Gender" variant="outlined" fullWidth />,
+              <TextField
+                label="Enter Age"
+                type="number"
+                variant="outlined"
+                fullWidth
+              />,
+              <FormControl>
+                <FormLabel id="demo-row-radio-buttons-group-label">
+                  Gender
+                </FormLabel>
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-row-radio-buttons-group-label"
+                  name="row-radio-buttons-group"
+                >
+                  <FormControlLabel
+                    value="female"
+                    control={<Radio />}
+                    label="Female"
+                  />
+                  <FormControlLabel
+                    value="male"
+                    control={<Radio />}
+                    label="Male"
+                  />
+                </RadioGroup>
+              </FormControl>,
             ].map((x, i) => (
               <Grid key={i} item xs={6}>
                 <Box sx={{ p: 1 }}>{x}</Box>

@@ -1,14 +1,14 @@
 export const languages = [
   {
-    value: "ENG",
+    value: "English",
     label: "English",
   },
   {
-    value: "HIN",
+    value: "Hindi",
     label: "Hindi",
   },
   {
-    value: "JAP",
+    value: "Japanese",
     label: "Japanese",
   },
 ];

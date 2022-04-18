@@ -9,7 +9,7 @@ import Checkbox from "@mui/material/Checkbox";
 import NumberNav from "../components/NumberNav";
 import { col, row } from "../constants/FlexStyles";
 
-const Quiz = () => {
+const Quiz = (props: { name: string; lang: string }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentAnswerIndex, setCurrentAnswerIndex] = useState<number>(-1);
   const [answers, setAnswer] = useState<any>([{}]);
@@ -66,8 +66,8 @@ const Quiz = () => {
   const handleSaveAnswer = (curr: number, ansIndex: number) => {
     if (ansIndex === -1 && curr < 3) alert("Select an Answer");
     else {
-        var checkedAnswers: any[] = [];
-        if (curr === 3) {
+      var checkedAnswers: any[] = [];
+      if (curr === 3) {
         const indexes = checked.flatMap((x, i) => (x ? i : []));
         checkedAnswers = jsQuestions[curr].answerOptions.filter((x, i) => {
           if (i === indexes[i]) return x;
@@ -131,9 +131,21 @@ const Quiz = () => {
       <Box
         sx={{
           ...row,
+          height: "10vh",
+          width: "100vw",
+          justifyContent: "center",
+        }}
+      >
+        <p>
+          {props.name} taking the test in preferred language {props.lang}
+        </p>
+      </Box>
+      <Box
+        sx={{
+          ...row,
           justifyContent: "space-evenly",
           width: "100vw",
-          height: "80vh",
+          height: "70vh",
           backgroundColor: "#E5E5E5",
         }}
       >
@@ -150,7 +162,7 @@ const Quiz = () => {
             backgroundColor: "white",
             width: "56vw",
             my: 3,
-            p: 2,
+            p: 1,
             borderRadius: 2,
           }}
         >
@@ -171,6 +183,11 @@ const Quiz = () => {
               >
                 {jsQuestions[currentIndex].answerOptions.map((x, i: number) => (
                   <GridOptions
+                    ans={
+                      answers[currentIndex + 1] === undefined
+                        ? {}
+                        : answers[currentIndex + 1].ca[0]
+                    }
                     key={i}
                     options={x.answerText}
                     ansIndex={i}

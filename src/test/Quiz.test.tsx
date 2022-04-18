@@ -13,7 +13,7 @@ import FinalSubmitButton from "../components/FinalSubmitButton";
 test("Snapshot of Quiz component", () => {
   const comp = renderer.create(
     <BrowserRouter>
-      <Quiz />
+      <Quiz lang={"English"} name={"XYZ"} />
     </BrowserRouter>
   );
   let tree = comp.toJSON();
@@ -24,7 +24,7 @@ describe("In Quiz,", () => {
   test("are the next and previous buttons present", () => {
     render(
       <BrowserRouter>
-        <Quiz />
+        <Quiz lang={"English"} name={"XYZ"} />
       </BrowserRouter>
     );
 
@@ -38,7 +38,7 @@ describe("In Quiz,", () => {
   test("is the save button present", () => {
     render(
       <BrowserRouter>
-        <Quiz />
+        <Quiz lang={"English"} name={"XYZ"} />
       </BrowserRouter>
     );
 
@@ -101,6 +101,7 @@ describe("In Quiz,", () => {
     render(
       <BrowserRouter>
         <GridOptions
+          ans={{}}
           options={"A"}
           ansIndex={0}
           clickedAns={() => {}}
@@ -123,6 +124,7 @@ describe("In Quiz,", () => {
     render(
       <BrowserRouter>
         <GridOptions
+          ans={{}}
           options={"A"}
           ansIndex={0}
           clickedAns={() => {}}

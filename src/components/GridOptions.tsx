@@ -6,9 +6,9 @@ import {
   InputAdornment,
 } from "@mui/material";
 import React from "react";
-import { useState } from "react";
 
 interface IOptions {
+  ans: any;
   options: any;
   ansIndex: number;
   clickedAns: Function;
@@ -25,8 +25,6 @@ interface IOptions {
 }
 
 const GridOptions = (props: IOptions) => {
-  // const [data, setData] = useState({});
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log({ [parseInt(e.target.name)]: e.target.value });
     props.setMatchData((prev) => ({
@@ -40,6 +38,7 @@ const GridOptions = (props: IOptions) => {
         <Grid item xs={5} role="gridOpt4">
           <TextField
             role="matchinp"
+            inputProps={{ maxLength: 1 }}
             id="outlined-start-adornment"
             sx={{ m: 1, width: "25ch" }}
             name={`${props.mapIndex + 1}`}
@@ -68,6 +67,10 @@ const GridOptions = (props: IOptions) => {
             sx={{
               width: "100%",
               p: 1,
+              backgroundColor:
+                props.ans !== {} && props.ans.answerText === props.options
+                  ? "lightskyblue"
+                  : "none",
               borderRadius: 1,
               "&:active": {
                 backgroundColor: "lightskyblue",
