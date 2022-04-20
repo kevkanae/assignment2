@@ -10,6 +10,7 @@ import NumberNav from "../components/NumberNav";
 import { col, row } from "../constants/FlexStyles";
 
 const Quiz = (props: { name: string; lang: string }) => {
+  const [inputValue, setInputValue] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentAnswerIndex, setCurrentAnswerIndex] = useState<number>(-1);
   const [answers, setAnswer] = useState<any>([{}]);
@@ -45,6 +46,7 @@ const Quiz = (props: { name: string; lang: string }) => {
   };
 
   const handleFillBlanks = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
     let index = jsQuestions[2].answerOptions.findIndex(
       (x) => x.answerText === e.currentTarget.value
     );
@@ -201,8 +203,12 @@ const Quiz = (props: { name: string; lang: string }) => {
             )}
             {currentIndex === 2 && (
               <Box>
-                <input type="text" onChange={handleFillBlanks} /> declarations
-                are immutable (var/let/const)
+                <input
+                  type="text"
+                  onChange={handleFillBlanks}
+                  value={inputValue}
+                />
+                declarations are immutable (var/let/const)
               </Box>
             )}
             {currentIndex === 3 && (
