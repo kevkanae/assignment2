@@ -1,4 +1,3 @@
-import React from "react";
 import renderer from "react-test-renderer";
 import TestRenderer from "react-test-renderer";
 import "@testing-library/jest-dom/extend-expect";
@@ -62,11 +61,7 @@ describe("In Quiz,", () => {
     );
 
     let matchqa = screen.getByRole("match-qa");
-    // let normalq = screen.getByRole("normal-q")
-    // let heading = screen.getByText(/Match the Following (eg: 1: a, 2: b)/i)
     expect(matchqa).toBeInTheDocument();
-    // expect(normalq).toBeInTheDocument();
-    // expect(heading).toBeInTheDocument();
   });
 
   test("does the sub components of numbernav work", () => {
