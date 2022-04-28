@@ -42,10 +42,12 @@ const FinalSubmitButton = (props: { data: any[]; matchData: any }) => {
         ],
       };
       console.log(ans);
-
-      localStorage.setItem("trues", len);
-      localStorage.setItem("ans", JSON.stringify(ans));
-      navigate("/score");
+      navigate("/score", {
+        state: {
+          trues: trues,
+          ans: ans,
+        },
+      });
     }
   };
 

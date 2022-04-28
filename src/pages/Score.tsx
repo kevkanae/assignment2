@@ -1,13 +1,18 @@
-import React, { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
+import { useLocation } from "react-router-dom";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+type LocationStateProps = {
+  trues: number;
+  ans: any[];
+};
+
 const Score = () => {
-  const truthy = localStorage.getItem("trues") as unknown as number;
-  const answers = JSON.parse(localStorage.getItem("ans") as any);
+  const location = useLocation();
+  const state = location?.state as LocationStateProps;
 
   return (
     <Box
@@ -27,7 +32,7 @@ const Score = () => {
           p: 1,
         }}
       >
-        {answers.map((x: any, i: number) => (
+        {state.ans.map((x: any, i: number) => (
           <Box
             key={i}
             sx={{
@@ -40,14 +45,17 @@ const Score = () => {
               p: 1,
             }}
           >
-            <Typography role={"Display-Question"} sx={{ fontSize: "1.4rem", fontWeight: 600 }}>
+            <Typography
+              role={`Display-Question-${i}`}
+              sx={{ fontSize: "1.4rem", fontWeight: 600 }}
+            >
               {x.q}
             </Typography>
-            <Typography role={"Display-Correct-Answer"}>
+            <Typography role={`Display-Correct-Answer-${i}`}>
               Correct Answer:{" "}
               {i === 4 ? JSON.stringify(x.a[0].answerText) : x.a[0].answerText}
             </Typography>
-              <Typography role={"Display-Chosen-Answer"}>
+            <Typography role={`Display-Chosen-Answer-${i}`}>
               Your Answer:
               {i === 4
                 ? JSON.stringify(x.ca[0].answerText)
@@ -73,7 +81,7 @@ const Score = () => {
             datasets: [
               {
                 label: "Quiz Answers",
-                data: [truthy, 5 - truthy],
+                data: [state.trues, 5 - state.trues],
                 backgroundColor: ["#d6ffde", "#ffd6d6"],
                 borderColor: ["green", "red"],
                 borderWidth: 1,

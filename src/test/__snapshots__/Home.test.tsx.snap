@@ -23,7 +23,6 @@ exports[`Snapshot of Home component 1`] = `
         >
           <div
             className="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
-            role="Name-inp"
           >
             <label
               className="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required css-1sumxir-MuiFormLabel-root-MuiInputLabel-root"
@@ -48,6 +47,7 @@ exports[`Snapshot of Home component 1`] = `
                 aria-invalid={false}
                 autoFocus={false}
                 className="MuiOutlinedInput-input MuiInputBase-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+                data-testid="name-inp"
                 disabled={false}
                 id=":r0:"
                 onAnimationStart={[Function]}
@@ -89,10 +89,10 @@ exports[`Snapshot of Home component 1`] = `
             <label
               className="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary Mui-required css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink={false}
-              htmlFor="outlined-select-currency"
-              id="outlined-select-currency-label"
+              htmlFor=":r1:"
+              id=":r1:-label"
             >
-              Language-Select
+              Language
               <span
                 aria-hidden={true}
                 className="MuiInputLabel-asterisk MuiFormLabel-asterisk css-wgai2y-MuiFormLabel-asterisk"
@@ -109,9 +109,9 @@ exports[`Snapshot of Home component 1`] = `
               <div
                 aria-expanded="false"
                 aria-haspopup="listbox"
-                aria-labelledby="outlined-select-currency-label outlined-select-currency"
+                aria-labelledby=":r1:-label :r1:"
                 className="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-                id="outlined-select-currency"
+                id=":r1:"
                 onBlur={[Function]}
                 onFocus={[Function]}
                 onKeyDown={[Function]}
@@ -129,6 +129,7 @@ exports[`Snapshot of Home component 1`] = `
                 aria-hidden={true}
                 autoFocus={false}
                 className="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                data-testid="lang-inp"
                 disabled={false}
                 onAnimationStart={[Function]}
                 onChange={[Function]}
@@ -155,7 +156,7 @@ exports[`Snapshot of Home component 1`] = `
                   className="css-1ftyaf0"
                 >
                   <span>
-                    Language-Select
+                    Language
                      
                     *
                   </span>

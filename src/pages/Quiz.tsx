@@ -204,6 +204,7 @@ const Quiz = (props: { name: string; lang: string }) => {
             {currentIndex === 2 && (
               <Box>
                 <input
+                  placeholder="enter ans"
                   type="text"
                   onChange={handleFillBlanks}
                   value={inputValue}
@@ -222,6 +223,7 @@ const Quiz = (props: { name: string; lang: string }) => {
                   <Box key={i}>
                     {x.answerText}
                     <Checkbox
+                      data-testid={`checkbox-${i}`}
                       checked={checked[i]}
                       onChange={(e) => handleCheckboxChange(e, i)}
                       inputProps={{ "aria-label": "controlled" }}

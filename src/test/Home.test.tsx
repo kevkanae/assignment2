@@ -1,7 +1,7 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import "@testing-library/jest-dom/extend-expect";
-import { screen, render } from "@testing-library/react";
+import { screen, render, fireEvent, waitFor } from "@testing-library/react";
 import Home from "../pages/Home";
 import { BrowserRouter } from "react-router-dom";
 
@@ -16,7 +16,7 @@ test("Snapshot of Home component", () => {
 });
 
 describe("In Home,", () => {
-  test("is the header present", () => {
+  test("are all fields present", () => {
     render(
       <BrowserRouter>
         <Home lang={""} name={"K"} setName={() => {}} setLang={() => {}} />
@@ -24,55 +24,39 @@ describe("In Home,", () => {
     );
     const heading = screen.getByText(/Enter Your Details/i);
     expect(heading).toBeInTheDocument();
-  });
 
-  test("is the name input present", () => {
-    render(
-      <BrowserRouter>
-        <Home lang={""} name={"K"} setName={() => {}} setLang={() => {}} />
-      </BrowserRouter>
-    );
-    const nameInput = screen.getByLabelText(/Name/i);
+    const nameInput = screen.getByTestId("name-inp");
     expect(nameInput).toBeInTheDocument();
-  });
 
-  test("is the language input present", () => {
-    render(
-      <BrowserRouter>
-        <Home lang={""} name={"K"} setName={() => {}} setLang={() => {}} />
-      </BrowserRouter>
-    );
-    const languageInput = screen.getByLabelText(/Language-Select/i);
+    const languageInput = screen.getByTestId("lang-inp");
     expect(languageInput).toBeInTheDocument();
-  });
 
-  test("is the submit button present", () => {
-    render(
-      <BrowserRouter>
-        <Home lang={""} name={"K"} setName={() => {}} setLang={() => {}} />
-      </BrowserRouter>
-    );
     const submitButton = screen.getByRole(/sub-button/i);
     expect(submitButton).toBeInTheDocument();
-  });
 
-  test("is the age input present", () => {
-    render(
-      <BrowserRouter>
-        <Home lang={""} name={"K"} setName={() => {}} setLang={() => {}} />
-      </BrowserRouter>
-    );
     const age = screen.getByLabelText(/Enter Age/i);
     expect(age).toBeInTheDocument();
+
+    const gender = screen.getByLabelText(/Gender/i);
+    expect(gender).toBeInTheDocument();
   });
 
-  test("is the gender input present", () => {
+  test("submit", () => {
     render(
       <BrowserRouter>
         <Home lang={""} name={"K"} setName={() => {}} setLang={() => {}} />
       </BrowserRouter>
     );
-    const gender = screen.getByLabelText(/Gender/i);
-    expect(gender).toBeInTheDocument();
+
+    const nameInput = screen.getByTestId("name-inp") as HTMLInputElement;
+    expect(nameInput).toBeInTheDocument();
+
+    fireEvent.change(nameInput, {
+      target: { value: "Kevin" },
+    });
+
+    let btn = screen.getByRole("sub-button");
+    expect(btn).toBeInTheDocument();
+    fireEvent.click(btn);
   });
 });

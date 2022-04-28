@@ -26,7 +26,7 @@ interface IOptions {
 
 const GridOptions = (props: IOptions) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log({ [parseInt(e.target.name)]: e.target.value });
+    // console.log({ [parseInt(e.target.name)]: e.target.value });
     props.setMatchData((prev) => ({
       ...prev,
       [parseInt(e.target.name)]: e.target.value,
@@ -37,8 +37,7 @@ const GridOptions = (props: IOptions) => {
       {props.currIndex === 4 ? (
         <Grid item xs={5} role="gridOpt4">
           <TextField
-            role="matchinp"
-            inputProps={{ maxLength: 1 }}
+            inputProps={{ "data-testid": "match-inp", maxLength: 1 }}
             id="outlined-start-adornment"
             sx={{ m: 1, width: "25ch" }}
             name={`${props.mapIndex + 1}`}
@@ -54,7 +53,7 @@ const GridOptions = (props: IOptions) => {
         </Grid>
       ) : (
         <Grid
-          role="gridOpt"
+          role={`gridOpt-${props.mapIndex}`}
           item
           xs={5}
           onClick={() => {

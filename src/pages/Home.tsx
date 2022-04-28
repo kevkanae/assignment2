@@ -6,7 +6,7 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { languages } from "../constants/Languages";
 import * as React from "react";
@@ -81,18 +81,18 @@ const Home = (props: IHome) => {
           >
             {[
               <TextField
+                inputProps={{ "data-testid": "name-inp" }}
                 label="Name"
                 variant="outlined"
                 fullWidth
                 required
-                role="Name-inp"
                 onChange={handleName}
                 value={props.name}
               />,
               <TextField
-                id="outlined-select-currency"
+                inputProps={{ "data-testid": "lang-inp" }}
                 select
-                label="Language-Select"
+                label="Language"
                 fullWidth
                 required
                 aria-label="Language"
